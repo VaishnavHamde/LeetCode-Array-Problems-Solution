@@ -2,27 +2,29 @@ package com.debugger.problems;
 
 public class Debugger {
 	public static void main(String[] args) {
-		int[] arr = new int[] {2,3,4,5,18,17,6};
-		 System.out.println(maxArea(arr));;
-		 System.out.println(arr.length);
+		int[] arr = new int[] {5,-3,5};
+		 System.out.println(maxSubarraySumCircular(arr));
 	}
 	
-	 static public int maxArea(int[] height) {
-	        if(height.length == 1)
-	            return 0;
-	            
-	        int i = 0;
-	        int j = i + 1;
-	        int max = 0;
+	 static public int maxSubarraySumCircular(int[] nums) {
+	        int res = nums[0];
+	        int maxEnding = nums[0];
+	        boolean bool = true;
+	        int count = 0;
 	        
-	        for(j = i+1; j < height.length; j++){
-	             max = Math.max(max, (j-i) * Math.min(height[i],height[j]));
-	            if(j == height.length - 1){
-	                i++;
-	                j = i+1;
+	        for(int i = 1; i < nums.length; i++){
+	            if(count != nums.length){
+	                maxEnding = Math.max(maxEnding + nums[i], nums[i]);
+	                if(maxEnding == nums[i])
+	                    count = 0;
+	                res = Math.max(res, maxEnding);
+	                if(i == nums.length - 1 && bool == true){
+	                    bool = false;
+	                    i = -1;
+	                }
+	                count++;
 	            }
 	        }
-	        
-	        return max;
+	        return res;
 	    }
 }
