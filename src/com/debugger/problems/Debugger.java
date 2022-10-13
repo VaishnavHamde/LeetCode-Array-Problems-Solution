@@ -2,29 +2,30 @@ package com.debugger.problems;
 
 public class Debugger {
 	public static void main(String[] args) {
-		int[] arr = new int[] {5,-3,5};
-		 System.out.println(maxSubarraySumCircular(arr));
+		 System.out.println(rotateString("abcde", "cbdea"));
 	}
 	
-	 static public int maxSubarraySumCircular(int[] nums) {
-	        int res = nums[0];
-	        int maxEnding = nums[0];
-	        boolean bool = true;
-	        int count = 0;
+	 static public boolean rotateString(String s, String goal) {
+	        if(s.length() != goal.length())
+	            return false;
 	        
-	        for(int i = 1; i < nums.length; i++){
-	            if(count != nums.length){
-	                maxEnding = Math.max(maxEnding + nums[i], nums[i]);
-	                if(maxEnding == nums[i])
-	                    count = 0;
-	                res = Math.max(res, maxEnding);
-	                if(i == nums.length - 1 && bool == true){
-	                    bool = false;
-	                    i = -1;
-	                }
-	                count++;
-	            }
+	        int x = s.length();
+	        
+	        for(int i = 0; i < x; i++){
+	            char temp = s.charAt(0);
+	            s = s.substring(1,x) + temp;
+	            System.out.println(s);
+	            if(equal(s, goal));
+	                return true;
 	        }
-	        return res;
+	         return false;
+	    };
+	    
+	    static public boolean equal(String s, String goal){
+	        for(int i = 0; i< s.length(); i++){
+	            if(s.charAt(i) != goal.charAt(i))
+	                return false;
+	        }           
+	        return true;
 	    }
 }

@@ -26,7 +26,6 @@ package com.easy.problems;
 
 public class Two_Sum {
 	public int[] twoSum(int[] nums, int target) {
-        int memory = target;
         for(int i = 0; i<nums.length; i++){
             int temp1 = target - nums[i];
             for(int j = i+1; j<nums.length; j++){

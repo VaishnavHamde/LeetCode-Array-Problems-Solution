@@ -34,7 +34,6 @@ public class Increasing_Triplet_Subsequence {
         if(nums.length < 3)
             return false;
         
-        boolean bool = false;
         int n = nums.length;
         int[] lMin = new int[n];
         int[] rMax = new int[n];
