@@ -1,53 +1,48 @@
 package com.debugger.problems;
+import java.util.*;
 
 public class Debugger {
 	public static void main(String[] args) {
-		int[] nums = new int[] {4,5,6,7,0,1,2};
-		 System.out.println(search(nums, 0));
+		System.out.println(countAndSay(4));
 	}
 	
-	 static public int search(int[] nums, int target) {
-	        int index = 0;
-	        for(int i = 1; i < nums.length; i++){
-	            if(nums[i]-nums[i-1] < 0) {
-	            	index = i;
-	            	break;
-	            }
-	                
-	        }
-	        
-	        reverse(nums, 0, index-1);
-	        reverse(nums, index, nums.length - 1);
-	        reverse(nums, 0, nums.length - 1);
-	        
-	        int low = 0;
-	        int high = nums.length - 1;
-	        int index1 = -1;
-	        
-	        while(low<=high){
-	            int mid = (low + high)/2;
-	            if(nums[mid] > target){
-	                high = mid-1;
-	            }
-	            else if(nums[mid] < target){
-	                low = mid+1;
-	            }
-	            else{
-	                index1 = mid;
-	                break;
-	            }
-	        }
-	        
-	        return (index + index1)%(nums.length);
-	    }
-	 
-	 static public void reverse(int[] nums, int low, int high){
-	        while(low<high){
-	            int temp = nums[low];
-	            nums[low] = nums[high];
-	            nums[high] = temp;
-	            low++;
-	            high--;
-	        }
-	    }
+	public static String countAndSay(int n) {
+//        if(n == 1)
+//            return Integer.toString(1);
+        String res = "";
+        if(n > 0)
+            res = number(2, "1113213211");
+        return res;
+    }
+    
+    public static String number(int n, String num){
+        StringBuilder n1 = new StringBuilder("");
+        if(n > 0){
+            int count = 1;
+            int temp = 1;
+            String s = num;
+            for(int i = 0; i < s.length()-1;i++){
+                int f = i;
+                while(i < s.length()-1 && s.charAt(i) == s.charAt(i+1)){
+                    if(f == 0)
+                        f = i;
+                    count++;
+                    temp = count;
+                    i++;
+                }
+                if(i != s.length()-1 && s.charAt(i) != s.charAt(i+1)){
+                    count = 1;
+                }
+                n1.append(Integer.toString(temp));
+                n1.append(Character.toString(s.charAt(f)));
+            }
+            
+            if(s.charAt(s.length()-2) != s.charAt(s.length()-1)){
+                n1.append(Integer.toString(1));
+                n1.append(s.charAt(s.length()-1));
+            }
+            num = number(n-1, n1.toString());
+        }
+        return num;
+    }
 }
