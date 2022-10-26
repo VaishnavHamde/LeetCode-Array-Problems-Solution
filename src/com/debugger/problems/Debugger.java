@@ -4,41 +4,67 @@ import java.util.*;
 public class Debugger {
 	public static void main (String[] args) throws java.lang.Exception
 	{
-		System.out.println(shortestCompletingWord( "1s3 PSt" ,new String[] {"step","steps","stripe","stepple"}));
+		System.out.println(
+singleNonDuplicate(new int[] {1,1,3,3,4,4,8,8,9,9,10,11,11,12,12,13,13,14,14,15,15,16,16}));
 	}
 	
-	static public String shortestCompletingWord(String licensePlate, String[] words) {
-        HashMap <Character, Integer> hm = new HashMap<>();
-        int count = 0;
+	static public int singleNonDuplicate(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
         
-        for(int i = 0; i < licensePlate.length(); i++){
-            if(licensePlate.charAt(i) >= 65 && licensePlate.charAt(i) <=90 || licensePlate.charAt(i) >= 97 && licensePlate.charAt(i) <=122){
-                hm.put(Character.toLowerCase(licensePlate.charAt(i)), hm.getOrDefault(Character.toLowerCase(licensePlate.charAt(i)), 0)+1);
-                count++;
-            }
-        }
+        if(nums.length == 1)
+            return nums[0];
         
-        String res = "abcdefghijklmnopqrstuvwxyz";
+        if(nums[0] != nums[1])
+            return nums[0];
         
-        for(int i = 0; i < words.length; i++){
-            HashMap<Character, Integer> hm1 = new HashMap<>();
-            hm1.putAll(hm);;
-            int temp = count;
-            for(int j = 0; j < words[i].length(); j++){
-                if(hm1.containsKey(Character.toLowerCase(words[i].charAt(j)))){
-                    temp--;
-                    hm1.put(Character.toLowerCase(words[i].charAt(j)), hm1.get(Character.toLowerCase(words[i].charAt(j))-1));
-                    if(hm1.get(words[i].toLowerCase().charAt(j)) == 0){
-                        hm1.remove(Character.toLowerCase(words[i].charAt(j)));
-                    }
-                }
-                if(temp == 0){
-                    if(res.length() > words[i].length()){
-                        res = words[i];
-                    }
+        if(nums[nums.length - 1] != nums[nums.length - 2])
+            return nums[nums.length-1];
+        
+        while(low <= high){
+            int mid = (low + high)/2;
+            int temp = nums[mid];
+            if(mid == 0){
+                if(nums[mid] != nums[mid+1]){
+                    return nums[mid];
                 }
             }
+            else if(mid == nums.length-1){
+                if(nums[mid] != nums[mid - 1]){
+                    return nums[mid];
+                }
+            }
+            else if(nums[mid] != nums[mid + 1] && nums[mid] != nums[mid - 1]){
+                return nums[mid];
+            }
+            
+            if((mid - low)%2 == 0){
+            	if(mid == low)
+            		low = mid+1;
+            	else if(mid == high)
+            		high = mid - 1;
+            	else if(nums[mid] == nums[mid-1]){
+                    high = mid - 1;
+                }
+                else{
+                    low = mid + 1;
+                }
+            }
+            else{
+            	if(mid == low)
+            		low = mid+1;
+            	else if(mid == high)
+            		high = mid - 1;
+            	else if(nums[mid] == nums[mid-1]){
+                    low = mid + 1;
+                }
+                else{
+                    high = mid - 1;
+                }
+            }
+            
         }
-        return res;
+        
+        return -1;
     }
 }
